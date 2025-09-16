@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>55GMS</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        iframe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="gameFrame" src="https://55gms.com" allowfullscreen></iframe>
+
+    <script>
+        const gameFrame = document.getElementById('gameFrame');
+        
+        // Allow fullscreen for the iframe
+        gameFrame.setAttribute('allowfullscreen', '');
+        
+        // Forward fullscreen requests from the iframe
+        window.addEventListener('message', function(event) {
+            if (event.data === 'enterFullscreen') {
+                gameFrame.requestFullscreen().catch(err => {
+                    console.log('Fullscreen error:', err);
+                });
+            }
+        }, false);
+        
+        // Make sure the iframe can go fullscreen
+        gameFrame.contentWindow.addEventListener('click', function(e) {
+            // This helps with some fullscreen triggers
+            gameFrame.focus();
+        });
+    </script>
+</body>
+</html>
